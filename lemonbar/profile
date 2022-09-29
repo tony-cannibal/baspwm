@@ -1,0 +1,6 @@
+PANEL_FIFO=/tmp/panel-fifo
+PANEL_HEIGHT=22
+FONT_1="Flexi IBM VGA True-10"
+FONT_2="Iosevka Nerd Font-10"
+PANEL_WM_NAME=bspwm_panel
+export PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME

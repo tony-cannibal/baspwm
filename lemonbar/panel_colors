@@ -1,0 +1,13 @@
+#!/usr/bin/bash
+
+# GENERAL
+FOREG="#8dbcdf"
+BACKG="#002831"
+ICON="#259286"
+
+#PANEL SPECIFIC
+URG="##bd3613"
+ICON2="#738a05"
+
+
+

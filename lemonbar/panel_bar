@@ -1,0 +1,86 @@
+#! /bin/sh
+#
+# Example panel for lemonbar
+lemon_dir="/home/luis/.config/bspwm/lemonbar"
+. ${lemon_dir}/panel_colors
+
+num_mon=$(bspc query -M | wc -l)
+
+while read -r line ; do
+	case $line in
+		S*)
+			# clock output
+			sys=" %{F$ICON}%{F-}%{F$FOREG}%{B$BACKG}${line#?} %{B-}%{F-}"
+			;;
+		V*)
+			# Volume Output 
+            vol=" %{F$ICON}%{F-}%{F$FOREG}%{B$BACKG} ${line#?} %{B-}%{F-}"
+			;;
+		H*)
+			# Volume Output 
+            hdd=" %{F$ICON}%{F-}%{F$FOREG}%{B$BACKG} ${line#?} %{B-}%{F-}"
+			;;
+		R*)
+			# Ram Output 
+            ram=" %{F$ICON}﬙%{F-}%{F$FOREG}%{B$BACKG} ${line#?} %{B-}%{F-}"
+			;;
+		T*)
+			# xtitle output
+			title="%{F$FOREG}%{B$BACKG} ${line#?} %{B-}%{F-}"
+			;;
+		W*)
+			# bspwm's state
+			wm=
+			IFS=':'
+			set -- ${line#?}
+			while [ $# -gt 0 ] ; do
+				item=$1
+				name=${item#?}
+				case $item in
+					[fFoOuU]*)
+						case $item in
+							f*)
+								# Free Desktop
+								FG=$FOREG
+								BG=$BACKG
+								# UL=$BG
+								;;
+							F*)
+                # Free Focused Desktop
+								FG=$BACKG
+								BG=$FOREG
+								# UL=$BG
+								;;
+							o*)
+								# Dccupied Desktop
+								FG=$ICON
+								BG=$BACKG
+								# UL=$BG
+								;;
+							O*)
+                # Occupied Focused Desktop 
+								FG=$BACKG
+								BG=$FOREG
+								# UL=$BG
+								;;
+							u*)
+								# urgent desktop
+								FG=$FOREG
+								BG=$URG
+								# UL=$BG
+								;;
+							U*)
+								FG=$FOREG
+								BG=$URG
+								# UL=$BG
+								;;
+						esac
+						wm="${wm}%{F${FG}}%{B${BG}}%{A:bspc desktop -f ${name}:} ${name} %{A}%{B-}%{F-}"
+						;;
+				esac
+				shift
+			done
+			;;
+	esac
+	printf "%s\n" "%{l}${wm}%{c}${title}%{r}${hdd}${ram}${vol}${sys}"
+done
